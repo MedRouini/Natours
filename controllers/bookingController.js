@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('../utils/appError');
 const multer = require('multer');
-const bookingModel = require('../models/bookingModel');
+const BookingModel = require('../models/bookingModel');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourId);
@@ -42,7 +42,13 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   const {tour, user, price} = req.query;
 
   if (!tour && !user && !price) return next();
-  await bookingModel.create({tour, user, price});
+  await BookingModel.create({tour, user, price});
 
   res.redirect(req.originalUrl.split('?')[0]);
 });
+
+exports.createBooking = factory.createDocument(BookingModel);
+exports.getBookingById = factory.getDocumentById(BookingModel);
+exports.getAllBookings = factory.getAllDocuments(BookingModel);
+exports.updateBooking = factory.updateDocument(BookingModel);
+exports.deleteBooking = factory.deleteDocument(BookingModel);
