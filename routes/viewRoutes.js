@@ -13,6 +13,7 @@ router.get('/',
 router.get('/tour/:slug', authController.isUserLoggedIn, viewsController.getTour);
 router.get('/login', authController.isUserLoggedIn, viewsController.getLoginForm);
 router.get('/me', authController.protectRoute, viewsController.getAccount);
+router.get('/my-bookings', authController.protectRoute, viewsController.getMyBookings)
 router.post('/submit-user-data', authController.protectRoute, viewsController.updateUserData)
 
 module.exports = router;
